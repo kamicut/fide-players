@@ -1,1 +1,4 @@
 tqdm==4.66.4
+datasette
+datasette-publish-fly
+

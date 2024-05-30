@@ -56,7 +56,7 @@ function fideSelector() {
 
     // Convert URLs to HTTPS
     convertToHttps(url) {
-      if (url.startsWith("http:")) {
+      if (url && url.startsWith("http:")) {
         return url.replace("http://", "https://");
       }
       return url;
@@ -116,7 +116,7 @@ function fideSelector() {
         url.searchParams.append("country__exact", this.selectedCountry);
       }
       if (this.playerSearch) {
-        url.searchParams.append("name__contains", this.playerSearch);
+        url.searchParams.append("_search", this.playerSearch);
       }
       if (this.sortAsc) {
         url.searchParams.append("_sort", this.sortKey);

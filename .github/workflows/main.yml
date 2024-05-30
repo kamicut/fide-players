@@ -1,0 +1,44 @@
+name: Generate and Publish Database
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Download XML zip file
+        run: |
+          curl -O http://ratings.fide.com/download/players_list_xml.zip
+
+      - name: Unzip XML file
+        run: |
+          unzip players_list_xml.zip -d ./
+          mv players_list.xml players.xml
+
+      - name: Generate SQLite database
+        run: |
+          python players.py players.xml players.db
+
+      - name: Deploy to Fly.io using Datasette
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          datasette publish fly players.db --app="fide-players" -m metadata.json --token $FLY_API_TOKEN
