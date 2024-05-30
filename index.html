@@ -8,7 +8,7 @@
   <title>FIDE Player Selector</title>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4 sm:p-8">
-  <div x-data="fideSelector(handleClick)" x-init="fetchCountries()" class="bg-white p-4 sm:p-8 rounded shadow-md w-full max-w-4xl">
+  <div x-data="fideSelector(player => handleClick(player))" x-init="fetchCountries()" class="bg-white p-4 sm:p-8 rounded shadow-md w-full max-w-4xl">
     <form>
       <!-- Country Selector -->
       <div class="mb-4">
@@ -99,12 +99,12 @@
       </button>
     </div>
   </div>
-  <script src="main.js"></script>
   <script>
     function handleClick(player) {
       const fideUrl = `https://ratings.fide.com/profile/${player.fideid}`;
       window.open(fideUrl, '_blank');
     }
   </script>
+  <script src="main.js"></script>
 </body>
 </html>
