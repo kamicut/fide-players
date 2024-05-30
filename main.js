@@ -23,7 +23,7 @@ function fideSelector() {
       )
         .then((response) => response.json())
         .then((data) => {
-          this.countries = data.rows.map((row) => row[0]).sort();
+          this.countries = data.rows.map((row) => row.country).sort();
           this.initializeFromUrl();
         });
     },
@@ -112,6 +112,7 @@ function fideSelector() {
     constructFetchUrl() {
       let url = new URL("https://fide-players.fly.dev/players/players.json");
       url.searchParams.append("_size", 20); // Set page size to 20
+      url.searchParams.append("_extra", "next_url");
       if (this.selectedCountry) {
         url.searchParams.append("country__exact", this.selectedCountry);
       }
@@ -137,8 +138,8 @@ function fideSelector() {
 
     // Select player and set the selected FIDE ID, copy to clipboard, and show toast
     selectPlayer(player) {
-      this.selectedFideId = player[0];
-      this.copyToClipboard(player[0]);
+      this.selectedFideId = player.fideid;
+      this.copyToClipboard(player.fideid);
       this.showToast();
     },
 

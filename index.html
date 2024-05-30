@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <title>FIDE Player Selector</title>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4 sm:p-8">
@@ -75,14 +75,14 @@
           </tr>
         </thead>
         <tbody>
-          <template x-for="player in players" :key="player[0]">
-            <tr @click="selectPlayer(player)" :class="{'bg-gray-200': selectedFideId === player[0]}" class="cursor-pointer hover:bg-gray-100">
-              <td class="py-2 px-4 border-b border-gray-200" x-text="player[0]"></td>
-              <td class="py-2 px-4 border-b border-gray-200" x-text="player[1]"></td>
-              <td class="py-2 px-4 border-b border-gray-200" x-text="player[8]"></td>
-              <td class="py-2 px-4 border-b border-gray-200" x-text="player[11]"></td>
-              <td class="py-2 px-4 border-b border-gray-200" x-text="player[14]"></td>
-              <td class="py-2 px-4 border-b border-gray-200" x-text="player[2]"></td>
+          <template x-for="player in players" :key="player.fideid">
+            <tr @click="selectPlayer(player)" :class="{'bg-gray-200': selectedFideId === player.fideid}" class="cursor-pointer hover:bg-gray-100">
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player.fideid"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player.name"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player.rating"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player.blitz_rating"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player.rapid_rating"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player.country"></td>
             </tr>
           </template>
         </tbody>

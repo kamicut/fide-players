@@ -1,8 +1,9 @@
 {
   "title": "FIDE Players",
-  "description": "FIDE player names, ratings, and other information. Retrieved on {{date}}",
+  "description": "FIDE player names, ratings, and other information. Retrieved on {{date}}. Created by https://keshmat.org",
   "source": "FIDE Ratings list",
   "source_url": "https://ratings.fide.com/download.phtml",
+  "about_url": "https://github.com/kamicut/fide-players",
   "databases": {
     "players": {
       "tables": {
