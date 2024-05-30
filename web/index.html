@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <title>FIDE Player Selector</title>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div x-data="fideSelector()" x-init="fetchCountries()" class="bg-white p-8 rounded shadow-md w-full max-w-4xl">
+    <form>
+      <!-- Country Selector -->
+      <div class="mb-4">
+        <label for="country" class="block text-gray-700 text-sm font-bold mb-2">Select Country:</label>
+        <select id="country" x-model="selectedCountry" @change="handleCountryChange()" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+          <option value="">--Select Country--</option>
+          <template x-for="country in countries" :key="country">
+            <option :value="country" x-text="country"></option>
+          </template>
+        </select>
+      </div>
+
+      <!-- Player Search -->
+      <div class="mb-4">
+        <label for="playerSearch" class="block text-gray-700 text-sm font-bold mb-2">Search Player:</label>
+        <input type="text" id="playerSearch" x-model="playerSearch" @input="handlePlayerSearchInput()" placeholder="Enter player name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+    </form>
+
+    <!-- Loading Indicator -->
+    <div x-show="loading" class="text-center my-4">
+      <svg class="animate-spin h-5 w-5 text-gray-700 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.372 0 0 5.372 0 12h4z"></path>
+      </svg>
+    </div>
+
+    <!-- Players Table -->
+    <div x-show="!loading">
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700 cursor-pointer" @click="sortTable('fideid')">
+              FIDE ID
+              <template x-if="sortKey === 'fideid'">
+                <span x-text="sortAsc ? '▲' : '▼'" class="ml-2"></span>
+              </template>
+            </th>
+            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700 cursor-pointer" @click="sortTable('name')">
+              Name
+              <template x-if="sortKey === 'name'">
+                <span x-text="sortAsc ? '▲' : '▼'" class="ml-2"></span>
+              </template>
+            </th>
+            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700 cursor-pointer" @click="sortTable('rating')">
+              Classical Rating
+              <template x-if="sortKey === 'rating'">
+                <span x-text="sortAsc ? '▲' : '▼'" class="ml-2"></span>
+              </template>
+            </th>
+            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700 cursor-pointer" @click="sortTable('rapid_rating')">
+              Rapid Rating
+              <template x-if="sortKey === 'rapid_rating'">
+                <span x-text="sortAsc ? '▲' : '▼'" class="ml-2"></span>
+              </template>
+            </th>
+            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700 cursor-pointer" @click="sortTable('blitz_rating')">
+              Blitz Rating
+              <template x-if="sortKey === 'blitz_rating'">
+                <span x-text="sortAsc ? '▲' : '▼'" class="ml-2"></span>
+              </template>
+            </th>
+            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700">Country</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="player in players" :key="player[0]">
+            <tr @click="selectPlayer(player)" :class="{'bg-gray-200': selectedFideId === player[0]}" class="cursor-pointer hover:bg-gray-100">
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player[0]"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player[1]"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player[8]"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player[11]"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player[14]"></td>
+              <td class="py-2 px-4 border-b border-gray-200" x-text="player[2]"></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Buttons -->
+    <div class="flex justify-between mt-4">
+      <button @click="fetchPrevious" :disabled="pageStack.length <= 1" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" :class="{'opacity-50': pageStack.length <= 1, 'cursor-not-allowed': pageStack.length <= 1}">
+        Previous
+      </button>
+      <button @click="fetchNext" :disabled="!nextUrl" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" :class="{'opacity-50': !nextUrl}">
+        Next
+      </button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div x-show="toastVisible" class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded shadow-lg" x-transition>
+      FIDE ID copied to clipboard!
+    </div>
+  </div>
+  <script src="fideSelector.js"></script>
+</body>
+</html>
