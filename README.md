@@ -1,6 +1,7 @@
 # FIDE Players Viewer
 
 View the list of FIDE players and their ratings. The source of the data is the [FIDE website](https://ratings.fide.com/download.phtml).
+Originally created for use for [Keshmat Chess School](https://keshmat.org/).
 
 ## Architecture
 
