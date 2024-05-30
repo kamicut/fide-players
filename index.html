@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <title>FIDE Player Selector</title>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4 sm:p-8">
-  <div x-data="fideSelector()" x-init="fetchCountries()" class="bg-white p-4 sm:p-8 rounded shadow-md w-full max-w-4xl">
+  <div x-data="fideSelector(handleClick)" x-init="fetchCountries()" class="bg-white p-4 sm:p-8 rounded shadow-md w-full max-w-4xl">
     <form>
       <!-- Country Selector -->
       <div class="mb-4">
@@ -98,12 +98,13 @@
         Next
       </button>
     </div>
-
-    <!-- Toast Notification -->
-    <div x-show="toastVisible" class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded shadow-lg" x-transition>
-      FIDE ID copied to clipboard!
-    </div>
   </div>
   <script src="main.js"></script>
+  <script>
+    function handleClick(player) {
+      const fideUrl = `https://ratings.fide.com/profile/${player.fideid}`;
+      window.open(fideUrl, '_blank');
+    }
+  </script>
 </body>
 </html>

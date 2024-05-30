@@ -1,4 +1,4 @@
-function fideSelector() {
+function fideSelector(onRowClick) {
   return {
     countries: [],
     players: [],
@@ -139,8 +139,7 @@ function fideSelector() {
     // Select player and set the selected FIDE ID, copy to clipboard, and show toast
     selectPlayer(player) {
       this.selectedFideId = player.fideid;
-      this.copyToClipboard(player.fideid);
-      this.showToast();
+      onRowClick(player);
     },
 
     // Copy FIDE ID to clipboard
