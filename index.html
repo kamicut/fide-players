@@ -7,8 +7,8 @@
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <title>FIDE Player Selector</title>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div x-data="fideSelector()" x-init="fetchCountries()" class="bg-white p-8 rounded shadow-md w-full max-w-4xl">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4 sm:p-8">
+  <div x-data="fideSelector()" x-init="fetchCountries()" class="bg-white p-4 sm:p-8 rounded shadow-md w-full max-w-4xl">
     <form>
       <!-- Country Selector -->
       <div class="mb-4">
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Players Table -->
-    <div x-show="!loading">
+    <div x-show="!loading" class="overflow-x-auto">
       <table class="min-w-full bg-white">
         <thead>
           <tr>
