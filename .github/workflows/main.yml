@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: "3.9"
 
       - name: Install dependencies
         run: |
@@ -41,8 +44,9 @@ jobs:
         run: |
           python generate_metadata.py
 
+      - name: Install Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
       - name: Deploy to Fly.io using Datasette
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           datasette publish fly players.db --app="fide-players" -m metadata.json
