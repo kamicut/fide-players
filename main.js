@@ -54,6 +54,14 @@ function fideSelector() {
       }, 300);
     },
 
+    // Convert URLs to HTTPS
+    convertToHttps(url) {
+      if (url.startsWith("http:")) {
+        return url.replace("http://", "https://");
+      }
+      return url;
+    },
+
     // Fetch players based on selected country and search text
     fetchPlayers(url = null) {
       this.loading = true;
@@ -77,8 +85,8 @@ function fideSelector() {
         .then((response) => response.json())
         .then((data) => {
           this.players = data.rows;
-          this.nextUrl = data.next_url || null;
-          this.cache[url] = { players: data.rows, nextUrl: data.next_url };
+          this.nextUrl = this.convertToHttps(data.next_url || null);
+          this.cache[url] = { players: data.rows, nextUrl: this.nextUrl };
           this.loading = false;
 
           // Prefetch next URL
@@ -93,7 +101,10 @@ function fideSelector() {
       fetch(nextUrl)
         .then((response) => response.json())
         .then((data) => {
-          this.cache[nextUrl] = { players: data.rows, nextUrl: data.next_url };
+          this.cache[nextUrl] = {
+            players: data.rows,
+            nextUrl: this.convertToHttps(data.next_url),
+          };
         });
     },
 
