@@ -37,6 +37,10 @@ jobs:
         run: |
           python players.py players.xml players.db
 
+      - name: Generate metadata.json
+        run: |
+          python generate_metadata.py
+
       - name: Deploy to Fly.io using Datasette
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

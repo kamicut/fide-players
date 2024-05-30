@@ -1,6 +1,6 @@
 {
   "title": "FIDE Players",
-  "description": "FIDE player names, ratings, and other information",
+  "description": "FIDE player names, ratings, and other information. Retrieved on {{date}}",
   "source": "FIDE Ratings list",
   "source_url": "https://ratings.fide.com/download.phtml",
   "databases": {
