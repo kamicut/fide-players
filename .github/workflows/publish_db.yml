@@ -48,4 +48,4 @@ jobs:
 
       - name: Deploy to Fly.io using Datasette
         run: |
-          datasette publish fly players.db --app="fide-players" -m metadata.json
+          datasette publish fly players.db --app="fide-players" -m metadata.json --install=datasette-plot
