@@ -31,7 +31,7 @@ jobs:
       - name: Unzip XML file
         run: |
           unzip players_list_xml.zip -d ./
-          mv players_list.xml players.xml
+          mv players_list_foa.xml players.xml
 
       - name: Generate SQLite database
         run: |
