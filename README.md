@@ -1,4 +1,4 @@
-# ![Chess Icon](./docs/assets/board.png) FIDE Players API & Viewer
+# ![Chess Icon](./docs/assets/board-mini.png) FIDE Players API & Viewer
 
 View the list of FIDE players and their ratings. Originally created for use for [Keshmat Chess School](https://keshmat.org/).
 
@@ -46,5 +46,3 @@ open index.html
 
 - Data from [FIDE](https://ratings.fide.com/download.phtml)
 - Icons <a href="https://www.flaticon.com/free-icons/chess" title="chess icons">Chess icons created by Andrejs Kirma - Flaticon</a>
-
-# License
