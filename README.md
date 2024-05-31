@@ -1,7 +1,6 @@
-# FIDE Players Viewer
+# ![Chess Icon](./docs/assets/board.png) FIDE Players API & Viewer
 
-View the list of FIDE players and their ratings. The source of the data is the [FIDE website](https://ratings.fide.com/download.phtml).
-Originally created for use for [Keshmat Chess School](https://keshmat.org/).
+View the list of FIDE players and their ratings. Originally created for use for [Keshmat Chess School](https://keshmat.org/).
 
 ## Architecture
 
@@ -10,7 +9,7 @@ Originally created for use for [Keshmat Chess School](https://keshmat.org/).
 - `index.html` is a simple HTML page that uses the API to display the list of players
 - The Datasette API is available at [https://fide-players.fly.dev/players](https://fide-players.fly.dev/players)
 - The HTML page is available at [https://kamicut.cc/fide-players/](https://kamicut.cc/fide-players/)
-- TODO: A Github Action to update the data daily
+- A Github Action is used to update the data weekly and deploy the API and HTML page
 
 ## Run locally
 
@@ -42,3 +41,10 @@ Open the HTML page in a browser:
 ```bash
 open index.html
 ```
+
+## Attributions
+
+- Data from [FIDE](https://ratings.fide.com/download.phtml)
+- Icons <a href="https://www.flaticon.com/free-icons/chess" title="chess icons">Chess icons created by Andrejs Kirma - Flaticon</a>
+
+# License
