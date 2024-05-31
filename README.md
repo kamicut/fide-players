@@ -45,4 +45,4 @@ open index.html
 ## Attributions
 
 - Data from [FIDE](https://ratings.fide.com/download.phtml)
-- Icons <a href="https://www.flaticon.com/free-icons/chess" title="chess icons">Chess icons created by Andrejs Kirma - Flaticon</a>
+- Chess icons created by <a href="https://www.flaticon.com/free-icons/chess" title="chess icons">Andrejs Kirma - Flaticon</a>
