@@ -49,8 +49,16 @@ function fideSelector(onRowClick) {
       if (this.fetchTimeout) {
         clearTimeout(this.fetchTimeout);
       }
+
+      // Save current state
+      const currentSearch = this.playerSearch;
+      const currentCountry = this.selectedCountry;
+
       this.fetchTimeout = setTimeout(() => {
-        this.fetchPlayers();
+        // Only fetch if the state hasn't changed again
+        if (currentSearch === this.playerSearch && currentCountry === this.selectedCountry) {
+          this.fetchPlayers();
+        }
       }, 300);
     },
 
@@ -175,12 +183,14 @@ function fideSelector(onRowClick) {
     // Handle country change
     handleCountryChange() {
       this.resetPageStack();
+      // Keep the existing search term when changing country
       this.fetchPlayers();
     },
 
     // Handle player search input
     handlePlayerSearchInput() {
       this.resetPageStack();
+      // Keep the existing country selection when searching
       this.throttledFetchPlayers();
     },
 
