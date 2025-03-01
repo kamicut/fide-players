@@ -59,7 +59,6 @@ def parse_xml_to_sqlite(xml_file, db_file, batch_size=1000):
     
     tree = ET.parse(xml_file)
     root = tree.getroot()
-    total_players = len(root.findall('player'))
 
     with sqlite3.connect(db_file) as conn:
         c = conn.cursor()
@@ -78,7 +77,7 @@ def parse_xml_to_sqlite(xml_file, db_file, batch_size=1000):
         '''
         
         players = []
-        for i, player in enumerate(tqdm(root.findall('player'), total=total_players, desc="Processing players")):
+        for player in tqdm(root.findall('player'), desc="Processing players"):
             fideid = int(player.find('fideid').text)
             name = player.find('name').text
             country = player.find('country').text
